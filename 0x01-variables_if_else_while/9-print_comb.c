@@ -1,18 +1,26 @@
 #include <stdio.h>
-
+#include <stdlib.h>
 /**
  * main - Entry point.
  *
- * Return: Always 0(Success).
+ * Return: Always 0 (Success).
  */
-int main()
-    for (int i = 0; i < 10; i++) 
-        putchar(i + '0');r
-        if (i < 9) {
-            putchar(',');
-            putchar(' ');
-        }
-    }
+int main(void)
+{
 
-    return 0;
+	int a;
+
+	for (a = 0; a <= 9; a++)
+	{
+		putchar(a + '0');
+		if (a != 9)
+		{
+			putchar(',');
+			putchar(' ');
+		}
+	}
+
+putchar('\n');
+
+return (0);
 }
