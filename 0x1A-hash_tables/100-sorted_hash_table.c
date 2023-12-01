@@ -1,6 +1,6 @@
 #include "hash_tables.h"
 
-shash_table_t *shash_table_create(unsigned long int n);
+shash_table_t *shash_table_create(unsigned long int size);
 int shash_table_set(shash_table_t *ht, const char *key, const char *value);
 char *shash_table_get(const shash_table_t *ht, const char *key);
 void shash_table_print(const shash_table_t *ht);
@@ -9,12 +9,12 @@ void shash_table_delete(shash_table_t *ht);
 
 /**
  * shash_table_create - Creates a sorted hash table.
- * @n: size of new sorted hash table.
+ * @size: The size of new sorted hash table.
  *
  * Return: If an error occurs - NULL.
  *         Otherwise - a pointer to the new sorted hash table.
  */
-shash_table_t *shash_table_create(unsigned long int n)
+shash_table_t *shash_table_create(unsigned long int size)
 {
 	shash_table_t *ht;
 	unsigned long int i;
@@ -23,11 +23,11 @@ shash_table_t *shash_table_create(unsigned long int n)
 	if (ht == NULL)
 		return (NULL);
 
-	ht->n = n;
-	ht->array = malloc(sizeof(shash_node_t *) * n);
+	ht->size = size;
+	ht->array = malloc(sizeof(shash_node_t *) * size);
 	if (ht->array == NULL)
 		return (NULL);
-	for (i = 0; i < n; i++)
+	for (i = 0; i < size; i++)
 		ht->array[i] = NULL;
 	ht->shead = NULL;
 	ht->stail = NULL;
@@ -57,7 +57,7 @@ int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 	if (value_copy == NULL)
 		return (0);
 
-	index = key_index((const unsigned char *)key, ht->n);
+	index = key_index((const unsigned char *)key, ht->size);
 	tmp = ht->shead;
 	while (tmp)
 	{
@@ -135,8 +135,8 @@ char *shash_table_get(const shash_table_t *ht, const char *key)
 	if (ht == NULL || key == NULL || *key == '\0')
 		return (NULL);
 
-	index = key_index((const unsigned char *)key, ht->n);
-	if (index >= ht->n)
+	index = key_index((const unsigned char *)key, ht->size);
+	if (index >= ht->size)
 		return (NULL);
 
 	node = ht->shead;
